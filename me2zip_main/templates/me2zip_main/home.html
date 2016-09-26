@@ -1,8 +1,43 @@
 {% extends "me2zip_main/header.html" %}
-
 {% block content %}
-<p>
-    hey wassup?
-</p>
 {% include "me2zip_main/includes/htmlsnippets.html" %}
+
+<form method="POST" action="/">
+    {% csrf_token %}
+    <input type="text" name="textfield">
+    <button type="submit">Upload text</button>
+</form>
+
+
+{% if latitude and longitude %}
+<script type="text/javascript">
+   function initMap() {
+        centerMap("map", {{ latitude }}, {{ longitude }});
+   }
+
+
+
+</script>
+
+{% else %}
+<script type="text/javascript">
+       function initMap() {
+            centerMap("map");
+       }
+
+
+
+</script>
+
+{% endif %}
+
+<p id="demo"></p>
+
+<div id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></div>
+
+<script type="text/javascript" src="../static/js/position_map.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVs8AjeZJtrTDbXnnaUTdbErTr5y74-SU&callback=initMap">
+</script>
+
 {% endblock %}
