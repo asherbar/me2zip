@@ -30,7 +30,7 @@ function centerMap(map_elem_id, latitude=null, longitude=null, set_url=false) {
     var pos = {lat: latitude, lng: longitude};
     var map = new google.maps.Map(document.getElementById(map_elem_id), {
         center: pos,
-        zoom: 6
+        zoom: 15
     });
     var infoWindow = new google.maps.InfoWindow({map: map});
     infoWindow.setPosition(pos);
