@@ -8,36 +8,26 @@
     <button type="submit">Upload text</button>
 </form>
 
+<div id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></div>
 
 {% if latitude and longitude %}
 <script type="text/javascript">
    function initMap() {
         centerMap("map", {{ latitude }}, {{ longitude }});
    }
-
-
-
 </script>
 
 {% else %}
 <script type="text/javascript">
-       function initMap() {
-            centerMap("map");
-       }
-
-
-
+    function initMap() {
+        centerMap("map", null, null, true);
+    }
 </script>
 
 {% endif %}
 
-<p id="demo"></p>
-
-<div id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></div>
 
 <script type="text/javascript" src="../static/js/position_map.js"></script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVs8AjeZJtrTDbXnnaUTdbErTr5y74-SU&callback=initMap">
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVs8AjeZJtrTDbXnnaUTdbErTr5y74-SU&callback=initMap"></script>
 
 {% endblock %}
