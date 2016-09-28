@@ -26,46 +26,11 @@
             {% if resolved_address %}
             <span class="pull-left">Your Address is:</span>
             <br>
-            <div class="row">
-                <div class="col-xs-3">
-                    <span class="pull-left">Country:</span>
-                </div>
-                <div class="col-xs-3">
-                    {{ resolved_address.country }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">
-                    <span class="pull-left">State:</span>
-                </div>
-                <div class="col-xs-3">
-                    {{ resolved_address.state }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">
-                    <span class="pull-left">City:</span>
-                </div>
-                <div class="col-xs-3">
-                    {{ resolved_address.city }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">
-                    <span class="pull-left">Street:</span>
-                </div>
-                <div class="col-xs-3">
-                    {{ resolved_address.street }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">
-                    <span class="pull-left">Street Number:</span>
-                </div>
-                <div class="col-xs-3">
-                    {{ resolved_address.street_number }}
-                </div>
-            </div>
+            {% include "me2zip_main/includes/address_row.html" with column_1="Country" column_2=resolved_address.country %}
+            {% include "me2zip_main/includes/address_row.html" with column_1="State" column_2=resolved_address.state %}
+            {% include "me2zip_main/includes/address_row.html" with column_1="City" column_2=resolved_address.city %}
+            {% include "me2zip_main/includes/address_row.html" with column_1="Street" column_2=resolved_address.street %}
+            {% include "me2zip_main/includes/address_row.html" with column_1="Street Number" column_2=resolved_address.street_number %}
             {% endif %}
         </div>
     </div>
