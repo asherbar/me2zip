@@ -1,6 +1,6 @@
 {% extends "me2zip_main/header.html" %}
 {% block content %}
-{% include "me2zip_main/includes/htmlsnippets.html" %}
+
 
 <form method="POST" action="/">
     {% csrf_token %}
@@ -8,22 +8,34 @@
     <button type="submit">Upload text</button>
 </form>
 
-<div id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></div>
+
+<center id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></center>
+
+
+{% if resolved_zip %}
+    <h3 style="">Your Zip Code is: {{ resolved_zip }}</h3>
+{% else %}
+    <h3>Zip Unknown</h3>
+{% endif %}
+
+
+{% if resolved_address %}
+    <h3>Your Address is: {{ resolved_address.city }}</h3>
+{% endif %}
+
 
 {% if latitude and longitude %}
-<script type="text/javascript">
-   function initMap() {
-        centerMap("map", {{ latitude }}, {{ longitude }});
-   }
-</script>
-
+    <script type="text/javascript">
+       function initMap() {
+            centerMap("map", {{ latitude }}, {{ longitude }});
+       }
+    </script>
 {% else %}
-<script type="text/javascript">
-    function initMap() {
-        centerMap("map", null, null, true);
-    }
-</script>
-
+    <script type="text/javascript">
+        function initMap() {
+            centerMap("map", null, null, true);
+        }
+    </script>
 {% endif %}
 
 
