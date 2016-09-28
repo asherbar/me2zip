@@ -1,6 +1,7 @@
 import os
 
 from django.shortcuts import render
+from zip_by_address.address import Address
 from zip_by_address.address_by_coordinates.address_by_coordinates_localizations.israel.\
     address_by_coordinates_resolver_israel import AddressByCoordinatesResolverIsrael
 from zip_by_address.zip_by_address_localizations.israel.zip_by_address_israel import ZipByAddressIsrael
@@ -24,8 +25,10 @@ class _Context(dict):
 def index(request):
     context = _Context()
     if request.method == 'POST':
-        search_id = request.POST.get('textfield', None)
-        context['search_id'] = search_id
+        address_args = {}
+        for address_part in ('country', 'state', 'city', 'street', 'street_number'):
+            address_args[address_part] = request.POST.get(address_part, None)
+        context['resolved_address'] = Address(**address_args)
     return render(request, 'me2zip_main/home.html', context=context)
 
 
