@@ -2,26 +2,74 @@
 {% block content %}
 
 
-<form method="POST" action="/">
-    {% csrf_token %}
-    <input type="text" name="textfield">
-    <button type="submit">Upload text</button>
-</form>
+<!--<form method="POST" action="/">-->
+    <!--{% csrf_token %}-->
+    <!--<input type="text" name="textfield">-->
+    <!--<button type="submit">Upload text</button>-->
+<!--</form>-->
 
 
-<center id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;"></center>
-
-
-{% if resolved_zip %}
-    <h3 style="">Your Zip Code is: {{ resolved_zip }}</h3>
-{% else %}
-    <h3>Zip Unknown</h3>
-{% endif %}
-
-
-{% if resolved_address %}
-    <h3>Your Address is: {{ resolved_address.city }}</h3>
-{% endif %}
+<div class="container">
+    <div class="row">
+        {% if resolved_zip %}
+            <h3>Your Zip Code is: {{ resolved_zip }}</h3>
+        {% else %}
+            <h3>Zip Unknown</h3>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <span class="pull-right" id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;">
+            </span>
+        </div>
+        <div class="col-xs-6">
+            {% if resolved_address %}
+            <span class="pull-left">Your Address is:</span>
+            <br>
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="pull-left">Country:</span>
+                </div>
+                <div class="col-xs-3">
+                    {{ resolved_address.country }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="pull-left">State:</span>
+                </div>
+                <div class="col-xs-3">
+                    {{ resolved_address.state }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="pull-left">City:</span>
+                </div>
+                <div class="col-xs-3">
+                    {{ resolved_address.city }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="pull-left">Street:</span>
+                </div>
+                <div class="col-xs-3">
+                    {{ resolved_address.street }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="pull-left">Street Number:</span>
+                </div>
+                <div class="col-xs-3">
+                    {{ resolved_address.street_number }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 
 {% if latitude and longitude %}

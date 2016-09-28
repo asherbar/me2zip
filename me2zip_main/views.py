@@ -30,8 +30,15 @@ def index(request):
 
 
 def get_zip_from_lat_long(request, latitude, longitude):
-    resolved_address = AddressByCoordinatesResolverIsrael(latitude=latitude, longitude=longitude).resolve_address()
-    resolved_zip = ZipByAddressIsrael(resolved_address).resolve_zip()
+    try:
+        resolved_address = AddressByCoordinatesResolverIsrael(latitude=latitude, longitude=longitude).resolve_address()
+    except RuntimeError:
+        resolved_address = resolved_zip = None
+    else:
+        try:
+            resolved_zip = ZipByAddressIsrael(resolved_address).resolve_zip()
+        except ValueError:
+            resolved_zip = None
     context = _Context(latitude=latitude, longitude=longitude, resolved_zip=resolved_zip,
                        resolved_address=resolved_address)
     return render(request, 'me2zip_main/home.html', context=context)
