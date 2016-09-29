@@ -2,17 +2,7 @@
 <script type="text/javascript" src="../static/js/get_current_position.js"></script>
 
 {% block on_load_func_implementation %}
-getCurrentPosition(
-    function(latitude, longitude) {
-        window.location.href = '/lat=' + latitude + '&long=' + longitude;
-    },
-    function() {
-        alert("Acquiring position failed");
-        window.location.href = '/autolocate=false';
-    },
-    function() {
-        alert("Acquiring position unsupported");
-        window.location.href = '/autolocate=false';
-    },
-)
+window.location.href = '/autolocate=false&country={{ resolved_address.country }}&state={{ resolved_address.state }}' +
+'&city={{ resolved_address.city }}&street={{ resolved_address.street }}' +
+'&street_number={{ resolved_address.street_number }}&mapcoords={{ latitude }},{{ longitude }}'
 {% endblock %}
