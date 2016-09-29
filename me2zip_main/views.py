@@ -23,13 +23,7 @@ class _Context(dict):
 
 
 def index(request):
-    context = _Context()
-    if request.method == 'POST':
-        address_args = {}
-        for address_part in ('country', 'state', 'city', 'street', 'street_number'):
-            address_args[address_part] = request.POST.get(address_part, None)
-        context['resolved_address'] = Address(**address_args)
-    return render(request, 'me2zip_main/home.html', context=context)
+    return render(request, 'me2zip_main/home.html')
 
 
 def get_zip_from_lat_long(request, latitude, longitude):
@@ -57,3 +51,26 @@ def get_zip_from_lat_long(request, latitude, longitude):
     context = _Context(latitude=latitude, longitude=longitude, resolved_zip=resolved_zip,
                        resolved_address=resolved_address)
     return render(request, 'me2zip_main/home.html', context=context)
+
+
+def autolocate():
+    return None
+
+
+def get_address_from_lat_long(request, latitude, longitude):
+    address_by_coords_standard_resolver = AddressByCoordinatesResolver(latitude=latitude, longitude=longitude)
+    try:
+        country = address_by_coords_standard_resolver.resolve_address().country
+    except RuntimeError:
+        return render(request, 'me2zip_main/errors/invalid_lat_long.html',
+                      context=_Context(latitude=latitude, longitude=longitude))
+    try:
+        address_by_coords_localized_resolver_cls = AddressByCoordinatesClsFactory(country).create()
+    except KeyError:
+        return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
+    try:
+        resolved_address = address_by_coords_localized_resolver_cls(latitude=latitude,
+                                                                    longitude=longitude).resolve_address()
+    except RuntimeError:
+        resolved_address = None
+    return render(request, 'me2zip_main/resolved_address.html', context=resolved_address)
