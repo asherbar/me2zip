@@ -3,8 +3,6 @@ from django.contrib import admin
 
 from . import views
 
-_GOOGLE_MAP_API_KEY = 'AIzaSyCW77yZPeb5OORbVYJ84djNBOiTBFoKDpw'
-
 _FLOAT_REGEX = '\d+\.\d+'
 urlpatterns = [
     url('^admin/', admin.site.urls),
