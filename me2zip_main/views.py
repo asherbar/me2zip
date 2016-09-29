@@ -66,3 +66,10 @@ def get_zip_from_address(request, autolocate_success, latitude, longitude, count
 def _get_country_from_coords(latitude, longitude):
     address_by_coords_standard_resolver = AddressByCoordinatesResolver(latitude=latitude, longitude=longitude)
     return address_by_coords_standard_resolver.resolve_address().country
+
+
+def manual_adress_input(request, latitude, longitude):
+    request_post_get = request.POST.get
+    return get_zip_from_address(request, False, latitude, longitude, request_post_get('country', ''),
+                                request_post_get('state', ''), request_post_get('city', ''),
+                                request_post_get('street', ''), request_post_get('street_number', ''))
