@@ -1,6 +1,6 @@
 {% extends "me2zip_main/map_based_page.html" %}
 
-{% block on_load_func_implementation %}
+{% block run_on_start_func_implementation %}
 getCurrentPosition(
     function(latitude, longitude) {
 window.location.href = '/mapcoords=' + latitude + ',' + longitude;

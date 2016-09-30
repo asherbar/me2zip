@@ -15,21 +15,26 @@
 		}
     </style>
 </head>
+<script type="text/javascript" src="../static/js/get_current_position.js"></script>
 
 <script type="text/javascript">
-    function onLoadFunc() {
-        {% block on_load_func_implementation %}
+    function runOnStart() {
+        {% block run_on_start_func_implementation %}
         {% endblock %}
     }
+    runOnStart();
 </script>
 
-<body class="body" style="background-color:#f6f6f6" onload="onLoadFunc();">
+<body class="body" style="background-color:#f6f6f6">
     <div class="container-fluid" style="min-height:95%; ">
         <div class="row">
             <div class="col-sm-2">
                 <br>
                 <center>
-                    <img src="{% static 'img/mr_zip.png' %}" class="responsive-img" style='max-height:100px;' alt="face">
+                    <a href="/">
+                        <img src="{% static 'img/mr_zip.png' %}" class="responsive-img" style='max-height:100px;'
+                             alt="face">
+                    </a>
                 </center>
             </div>
             <div class="col-sm-10">
