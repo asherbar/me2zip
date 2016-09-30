@@ -11,10 +11,9 @@
             </span>
         </div>
         <div class="col-xs-6">
-            <span class="pull-left">Your Address is:</span>
+            <span class="pull-left">Your Address:</span>
             <br>
-            <form method="POST" action="/manual_address_input">
-                {% csrf_token %}
+            <form method="GET" action="/zip_from_address/">
                 {% include "me2zip_main/includes/address_row.html" with address_part="Country" address_name="country" address_value=resolved_address.country %}
                 {% include "me2zip_main/includes/address_row.html" with address_part="State" address_name="state" address_value=resolved_address.state %}
                 {% include "me2zip_main/includes/address_row.html" with address_part="City" address_name="city" address_value=resolved_address.city %}

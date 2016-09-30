@@ -48,6 +48,11 @@ def get_address_from_lat_long(request, latitude, longitude):
 
 def get_zip_from_address(request, latitude=None, longitude=None, country='', state='', city='',
                          street='', street_number=''):
+    country = request.GET.get('country', country)
+    state = request.GET.get('state', state)
+    city = request.GET.get('city', city)
+    street = request.GET.get('street', street)
+    street_number = request.GET.get('street_number', street_number)
     resolved_address = Address(country, state, city, street, street_number)
     if latitude is None or longitude is None:
         latitude, longitude = _get_lat_long_from_address(resolved_address)
