@@ -7,11 +7,9 @@ window.location.href = '/mapcoords=' + latitude + ',' + longitude;
     },
     function() {
         alert("Acquiring position failed");
-        window.location.href = '/autolocate=false';
     },
     function() {
         alert("Acquiring position unsupported");
-        window.location.href = '/autolocate=false';
 }
 )
 {% endblock %}

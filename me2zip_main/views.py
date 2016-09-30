@@ -46,7 +46,7 @@ def get_address_from_lat_long(request, latitude, longitude):
     return render(request, 'me2zip_main/resolved_address.html', context=context)
 
 
-def get_zip_from_address(request, autolocate_success, latitude=None, longitude=None, country='', state='', city='',
+def get_zip_from_address(request, latitude=None, longitude=None, country='', state='', city='',
                          street='', street_number=''):
     resolved_address = Address(country, state, city, street, street_number)
     if latitude is None or longitude is None:
@@ -73,7 +73,7 @@ def _get_country_from_coords(latitude, longitude):
 
 def manual_address_input(request):
     request_post_get = request.POST.get
-    return get_zip_from_address(request, False, None, None, request_post_get('country', ''),
+    return get_zip_from_address(request, None, None, request_post_get('country', ''),
                                 request_post_get('state', ''), request_post_get('city', ''),
                                 request_post_get('street', ''), request_post_get('street_number', ''))
 

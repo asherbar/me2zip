@@ -1,7 +1,7 @@
 {% extends "me2zip_main/map_based_page.html" %}
 
 {% block run_on_start_func_implementation %}
-window.location.href = '/autolocate=false&country={{ resolved_address.country }}&state={{ resolved_address.state }}' +
+window.location.href = '/country={{ resolved_address.country }}&state={{ resolved_address.state }}' +
 '&city={{ resolved_address.city }}&street={{ resolved_address.street }}' +
 '&street_number={{ resolved_address.street_number }}&mapcoords={{ latitude }},{{ longitude }}'
 {% endblock %}
