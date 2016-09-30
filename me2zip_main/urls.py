@@ -14,7 +14,7 @@ urlpatterns = [
     url('^$', views.index, name='index'),
     url(('^{}$'.format(_MAP_COORDS_REGEX)), views.get_address_from_lat_long,
         name='get_zip_from_lat_long'),
-    url(('^manual_adress_input&{}$'.format(_MAP_COORDS_REGEX)), views.manual_adress_input, name='manual_adress_input'),
+    url('^manual_address_input$', views.manual_address_input, name='manual_address_input'),
     url('^autolocate=(?P<autolocate_success>true|false)(&country=(?P<country>{0})&state=(?P<state>{0})'
         '&city=(?P<city>{0})&street=(?P<street>{0})&street_number=(?P<street_number>{0}))?'
         '&{1}$'.format(_ADDRESS_COMPONENT_REGEX, _MAP_COORDS_REGEX), views.get_zip_from_address,

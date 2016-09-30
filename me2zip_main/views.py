@@ -4,6 +4,7 @@ from django.shortcuts import render
 from zip_by_address.address import Address
 from zip_by_address.address_by_coordinates.address_by_coordinates_resolver import AddressByCoordinatesResolver
 from zip_by_address.address_by_coordinates.address_by_coordinates_resolver_factory import AddressByCoordinatesClsFactory
+from zip_by_address.coordinates_by_address.coordinates_by_address_resolver import CoordinatesByAddressResolver
 from zip_by_address.zip_by_address_resolver_factory import ZipResolverClsFactory
 
 _GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_MAPS_API_KEY']
@@ -45,8 +46,11 @@ def get_address_from_lat_long(request, latitude, longitude):
     return render(request, 'me2zip_main/resolved_address.html', context=context)
 
 
-def get_zip_from_address(request, autolocate_success, latitude, longitude, country='', state='', city='', street='',
-                         street_number=''):
+def get_zip_from_address(request, autolocate_success, latitude=None, longitude=None, country='', state='', city='',
+                         street='', street_number=''):
+    resolved_address = Address(country, state, city, street, street_number)
+    if latitude is None or longitude is None:
+        latitude, longitude = _get_lat_long_from_address(resolved_address)
     try:
         country_by_coords = _get_country_from_coords(latitude, longitude)
     except RuntimeError:
@@ -56,7 +60,6 @@ def get_zip_from_address(request, autolocate_success, latitude, longitude, count
         zip_by_address_localized_resolver_cls = ZipResolverClsFactory(country_by_coords).create()
     except KeyError:
         return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
-    resolved_address = Address(country, state, city, street, street_number)
     resolved_zip = zip_by_address_localized_resolver_cls(resolved_address).resolve_zip()
     context = _Context(latitude=latitude, longitude=longitude, resolved_address=resolved_address,
                        resolved_zip=resolved_zip)
@@ -68,8 +71,12 @@ def _get_country_from_coords(latitude, longitude):
     return address_by_coords_standard_resolver.resolve_address().country
 
 
-def manual_adress_input(request, latitude, longitude):
+def manual_address_input(request):
     request_post_get = request.POST.get
-    return get_zip_from_address(request, False, latitude, longitude, request_post_get('country', ''),
+    return get_zip_from_address(request, False, None, None, request_post_get('country', ''),
                                 request_post_get('state', ''), request_post_get('city', ''),
                                 request_post_get('street', ''), request_post_get('street_number', ''))
+
+
+def _get_lat_long_from_address(address):
+    return CoordinatesByAddressResolver(address).resolve_coords()
