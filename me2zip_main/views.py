@@ -94,7 +94,7 @@ def _get_country_from_coords(latitude, longitude):
 
 
 def _get_unsupported_country_render(country, request):
-    return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
+    return render(request, 'me2zip_main/errors/country_not_supported.html', context=_Context(country=country))
 
 
 def _get_lat_long_from_address(address):
