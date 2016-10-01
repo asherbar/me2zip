@@ -74,6 +74,11 @@ def get_zip_from_address(request, latitude=None, longitude=None, country='', sta
     return render(request, 'me2zip_main/resolved_zip.html', context=context)
 
 
+def about(request):
+    return render(request, 'me2zip_main/about.html',
+                  context={'available_countries': ZipResolverClsFactory.get_supported_countries()})
+
+
 def _get_country_from_coords(latitude, longitude):
     address_by_coords_standard_resolver = AddressByCoordinatesResolver(latitude=latitude, longitude=longitude)
     return address_by_coords_standard_resolver.resolve_address().country

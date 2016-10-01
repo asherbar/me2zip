@@ -18,4 +18,5 @@ urlpatterns = [
         '&street_number=(?P<street_number>{0}))?'
         '(&{1})?$'.format(_ADDRESS_COMPONENT_REGEX, _MAP_COORDS_REGEX),
         views.get_zip_from_address, name='zip_from_address'),
+    url('^about$', views.about, name='about'),
 ]

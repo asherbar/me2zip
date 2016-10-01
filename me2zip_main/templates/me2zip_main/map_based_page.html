@@ -1,46 +1,54 @@
 {% extends "me2zip_main/header.html" %}
 {% block content %}
+<center class='container-fluid'>
 
-{% block message %}
-{% endblock %}
+    {% block message %}
+    {% endblock %}
 
-<div class="container">
-    <div class="row">
-        <h3>Your Zip Code is: {{ resolved_zip|default:"unknown" }}</h3>
-    </div>
-    <div class="row">
-        <div class="col-xs-6">
-            <span class="pull-right" id="map" style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;">
-            </span>
+    <div class="container">
+        <div class="row">
+            <h3>Your Zip Code is: {{ resolved_zip|default:"unknown" }}</h3>
         </div>
-        <div class="col-xs-6">
-            <span class="pull-left">Your Address:</span>
-            <br>
-            <form method="GET" action="/zip_from_address/">
-                {% include "me2zip_main/includes/address_row.html" with address_part="Country" address_name="country" address_value=resolved_address.country %}
-                {% include "me2zip_main/includes/address_row.html" with address_part="State" address_name="state" address_value=resolved_address.state %}
-                {% include "me2zip_main/includes/address_row.html" with address_part="City" address_name="city" address_value=resolved_address.city %}
-                {% include "me2zip_main/includes/address_row.html" with address_part="Street" address_name="street" address_value=resolved_address.street %}
-                {% include "me2zip_main/includes/address_row.html" with address_part="Street Number" address_name="street_number" address_value=resolved_address.street_number %}
-                <span class="center-block"><input type="submit" value="Submit"></span>
-            </form>
+        <div class="row">
+            <div class="col-xs-6">
+                <span class="pull-right" id="map"
+                      style="width: 280px; height: 288px; overflow: hidden; border: 1px solid black; position: relative;">
+                </span>
+            </div>
+            <div class="col-xs-6">
+                <span class="pull-left">Your Address:</span>
+                <br>
+                <form method="GET" action="/zip_from_address/">
+                    {% include "me2zip_main/includes/address_row.html" with address_part="Country"
+                    address_name="country" address_value=resolved_address.country %}
+                    {% include "me2zip_main/includes/address_row.html" with address_part="State" address_name="state"
+                    address_value=resolved_address.state %}
+                    {% include "me2zip_main/includes/address_row.html" with address_part="City" address_name="city"
+                    address_value=resolved_address.city %}
+                    {% include "me2zip_main/includes/address_row.html" with address_part="Street" address_name="street"
+                    address_value=resolved_address.street %}
+                    {% include "me2zip_main/includes/address_row.html" with address_part="Street Number"
+                    address_name="street_number" address_value=resolved_address.street_number %}
+                    <span class="center-block"><input type="submit" value="Submit"></span>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<script type="text/javascript">
-   function initMap() {
-        {% if not latitude or not longitude %}
-            centerMap("map");
-        {% else %}
-            centerMap("map", {{ latitude }}, {{ longitude }});
-        {% endif %}
-   }
-</script>
+    <script type="text/javascript">
+       function initMap() {
+            {% if not latitude or not longitude %}
+                centerMap("map");
+            {% else %}
+                centerMap("map", {{ latitude }}, {{ longitude }});
+            {% endif %}
+       }
+
+    </script>
 
 
-<script type="text/javascript" src="../static/js/position_map.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ gm_api_key }}&callback=initMap"></script>
-
+    <script type="text/javascript" src="../static/js/position_map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ gm_api_key }}&callback=initMap"></script>
+</center>
 {% endblock %}

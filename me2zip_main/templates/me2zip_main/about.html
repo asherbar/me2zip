@@ -1,0 +1,32 @@
+{% extends "me2zip_main/header.html" %}
+{% block content %}
+<h3>What is Me2Zip?</h3>
+<p>
+    Me2Zip is a website that was created to ease, and when possible, automate, the process of obtaining a
+    <a href="https://en.wikipedia.org/wiki/ZIP_Code" target="_blank">ZIP code</a>, based on your current location.
+</p>
+<h3>What countries are supported?</h3>
+<style>
+li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e062";
+    font-family: 'Glyphicons Halflings';
+    font-size: 20px;
+    float: left;
+    margin-top: -5px;
+    margin-left: 0px;
+    color: green;
+}
+li {
+    max-width:25%; /* limit width */
+    word-break:break-all; /* wrap extended text*/
+}
+
+</style>
+Currently, the following countries are supported:
+<ul class="list-group">
+    {% for country in available_countries %}
+    <li class="list-group-item">{{ country|capfirst }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
