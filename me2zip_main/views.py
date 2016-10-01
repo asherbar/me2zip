@@ -65,7 +65,10 @@ def get_zip_from_address(request, latitude=None, longitude=None, country='', sta
         zip_by_address_localized_resolver_cls = ZipResolverClsFactory(country_by_coords).create()
     except KeyError:
         return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
-    resolved_zip = zip_by_address_localized_resolver_cls(resolved_address).resolve_zip()
+    try:
+        resolved_zip = zip_by_address_localized_resolver_cls(resolved_address).resolve_zip()
+    except ValueError:
+        resolved_zip = ''
     context = _Context(latitude=latitude, longitude=longitude, resolved_address=resolved_address,
                        resolved_zip=resolved_zip)
     return render(request, 'me2zip_main/resolved_zip.html', context=context)
