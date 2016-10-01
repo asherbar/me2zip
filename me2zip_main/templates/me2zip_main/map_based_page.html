@@ -1,6 +1,9 @@
 {% extends "me2zip_main/header.html" %}
 {% block content %}
 
+{% block message %}
+{% endblock %}
+
 <div class="container">
     <div class="row">
         <h3>Your Zip Code is: {{ resolved_zip|default:"unknown" }}</h3>

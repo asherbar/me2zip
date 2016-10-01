@@ -36,7 +36,7 @@ def get_address_from_lat_long(request, latitude, longitude):
     try:
         address_by_coords_localized_resolver_cls = AddressByCoordinatesClsFactory(country).create()
     except KeyError:
-        return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
+        return _get_unsupported_country_render(country, request)
     try:
         resolved_address = address_by_coords_localized_resolver_cls(latitude=latitude,
                                                                     longitude=longitude).resolve_address()
@@ -64,7 +64,7 @@ def get_zip_from_address(request, latitude=None, longitude=None, country='', sta
     try:
         zip_by_address_localized_resolver_cls = ZipResolverClsFactory(country_by_coords).create()
     except KeyError:
-        return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
+        return _get_unsupported_country_render(country, request)
     try:
         resolved_zip = zip_by_address_localized_resolver_cls(resolved_address).resolve_zip()
     except ValueError:
@@ -84,6 +84,10 @@ def manual_address_input(request):
     return get_zip_from_address(request, None, None, request_post_get('country', ''),
                                 request_post_get('state', ''), request_post_get('city', ''),
                                 request_post_get('street', ''), request_post_get('street_number', ''))
+
+
+def _get_unsupported_country_render(country, request):
+    return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
 
 
 def _get_lat_long_from_address(address):
