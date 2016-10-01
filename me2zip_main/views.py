@@ -79,13 +79,6 @@ def _get_country_from_coords(latitude, longitude):
     return address_by_coords_standard_resolver.resolve_address().country
 
 
-def manual_address_input(request):
-    request_post_get = request.POST.get
-    return get_zip_from_address(request, None, None, request_post_get('country', ''),
-                                request_post_get('state', ''), request_post_get('city', ''),
-                                request_post_get('street', ''), request_post_get('street_number', ''))
-
-
 def _get_unsupported_country_render(country, request):
     return render(request, 'me2zip_main/errors/country_not_supported.html', context={'country': country})
 
