@@ -5,6 +5,7 @@ from zip_by_address.address import Address
 from zip_by_address.address_by_coordinates.address_by_coordinates_resolver import AddressByCoordinatesResolver
 from zip_by_address.address_by_coordinates.address_by_coordinates_resolver_factory import AddressByCoordinatesClsFactory
 from zip_by_address.coordinates_by_address.coordinates_by_address_resolver import CoordinatesByAddressResolver
+from zip_by_address.exceptions import NoSuchAddress
 from zip_by_address.zip_by_address_resolver_factory import ZipResolverClsFactory
 
 _GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_MAPS_API_KEY']
@@ -67,7 +68,7 @@ def get_zip_from_address(request, latitude=None, longitude=None, country='', sta
         return _get_unsupported_country_render(country, request)
     try:
         resolved_zip = zip_by_address_localized_resolver_cls(resolved_address).resolve_zip()
-    except ValueError:
+    except (ValueError, NoSuchAddress):
         resolved_zip = ''
     context = _Context(latitude=latitude, longitude=longitude, resolved_address=resolved_address,
                        resolved_zip=resolved_zip)
