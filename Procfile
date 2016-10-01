@@ -1,0 +1,1 @@
+web: gunicorn me2zip.wsgi --log-file -
