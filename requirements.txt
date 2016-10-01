@@ -1,3 +1,4 @@
 pyzipit==0.0.5
 Django==1.10.1
 gunicorn==19.4.5
+whitenoise==3.2.2
