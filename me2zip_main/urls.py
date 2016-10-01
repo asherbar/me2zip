@@ -19,5 +19,6 @@ urlpatterns = [
         '(&{1})?$'.format(_ADDRESS_COMPONENT_REGEX, _MAP_COORDS_REGEX),
         views.get_zip_from_address, name='zip_from_address'),
     url('^about$', views.about, name='about'),
-    url('^api', views.api, name='api'),
+    url('^api$', views.api, name='api'),
+    url('^help$', views.help_page, name='help'),
 ]

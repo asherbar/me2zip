@@ -84,6 +84,10 @@ def api(request):
     return render(request, 'me2zip_main/api.html')
 
 
+def help_page(request):
+    return render(request, 'me2zip_main/help.html')
+
+
 def _get_country_from_coords(latitude, longitude):
     address_by_coords_standard_resolver = AddressByCoordinatesResolver(latitude=latitude, longitude=longitude)
     return address_by_coords_standard_resolver.resolve_address().country

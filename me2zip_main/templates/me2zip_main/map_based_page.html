@@ -4,10 +4,15 @@
 
     {% block message %}
     {% endblock %}
+    <script type="text/javascript">
+        $(function () {
+            $("[data-toggle=popover]").popover();
+        })
+    </script>
 
     <div class="container">
         <div class="row">
-            <h3>Your Zip Code is: {{ resolved_zip|default:"unknown" }}</h3>
+            <h3>Your Zip Code is: {{ resolved_zip|default:"unknown <a tabindex='0' role='button' data-toggle='popover' data-trigger='focus' data-html='true' title='What happened?' data-content='<p>We were unable to resolve your ZIP code with the information you gave us. Try fixing the address and retry. See <a href=&#39;/help&#39;>help</a> for more.</p>'><span class='glyphicon glyphicon-question-sign' aria-hidden='true'></span></a>" }}</h3>
         </div>
         <div class="row">
             <div class="col-xs-6">
