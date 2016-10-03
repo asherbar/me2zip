@@ -1,5 +1,5 @@
 {% extends "me2zip_main/map_based_page.html" %}
 {% block message %}
-<h3>Sorry, the coordinates <b>{{ latitude }}, {{ longitude }}</b> seem to be in the middle of the ocean.</h3>
-<h4>Please try a different location.</h4>
+<h3>Sorry, we're unable to understand in what country the coordinates <b>{{ latitude }}, {{ longitude }}</b> are.</h3>
+<h4>Please see the <a href="/help">help page</a> for more information, or try a different location.</h4>
 {% endblock %}
