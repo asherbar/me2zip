@@ -1,3 +1,4 @@
+import logging
 import os
 
 from django.shortcuts import render
@@ -31,9 +32,8 @@ def index(request):
 def get_address_from_lat_long(request, latitude, longitude):
     try:
         country = _get_country_from_coords(latitude, longitude)
-    except RuntimeError:
-        return render(request, 'me2zip_main/errors/invalid_lat_long.html', context=_Context(latitude=latitude,
-                                                                                            longitude=longitude))
+    except RuntimeError as e:
+        return _get_invalid_lat_long_render(request, latitude, longitude, e)
     try:
         address_by_coords_localized_resolver_cls = AddressByCoordinatesClsFactory(country).create()
     except KeyError:
@@ -59,9 +59,8 @@ def get_zip_from_address(request, latitude=None, longitude=None, country='', sta
         latitude, longitude = _get_lat_long_from_address(resolved_address)
     try:
         country_by_coords = _get_country_from_coords(latitude, longitude)
-    except RuntimeError:
-        return render(request, 'me2zip_main/errors/invalid_lat_long.html', context=_Context(latitude=latitude,
-                                                                                            longitude=longitude))
+    except RuntimeError as e:
+        return _get_invalid_lat_long_render(request, latitude, longitude, e)
     try:
         zip_by_address_localized_resolver_cls = ZipResolverClsFactory(country_by_coords).create()
     except KeyError:
@@ -99,3 +98,10 @@ def _get_unsupported_country_render(country, request):
 
 def _get_lat_long_from_address(address):
     return CoordinatesByAddressResolver(address).resolve_coords()
+
+
+def _get_invalid_lat_long_render(request, latitude, longitude, exception):
+    logger = logging.getLogger('views')
+    logger.error(str(exception))
+    return render(request, 'me2zip_main/errors/invalid_lat_long.html', context=_Context(latitude=latitude,
+                                                                                        longitude=longitude))
